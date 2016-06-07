@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """
 The Cipher challenge
 http://simonsingh.net/cryptography/cipher-challenge/the-ciphertexts/
@@ -298,7 +298,6 @@ hypothesis.append(20)
 hypothesis.append(3)
 hypothesis.append(2)
 
-
 def vigenere(textList, hypothesis):
     keyLength = len(hypothesis)
     clearText = ""
@@ -320,8 +319,6 @@ def vigenere(textList, hypothesis):
     return(clearText)
     
 vigenere(alphaB, hypothesis)
-        
-
 
 decode = ""
 for char in stage1:
