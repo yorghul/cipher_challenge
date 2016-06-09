@@ -9,36 +9,28 @@ http://simonsingh.net/cryptography/cipher-challenge/the-ciphertexts/
 import nltk
 import string
 import matplotlib.pyplot as plt
-import pylab as pl
 import numpy as np
+import csv
 
-freqEnglish = {}    
-freqEnglish['a']=8.167	 
-freqEnglish['b']=1.492	 
-freqEnglish['c']=2.782	 
-freqEnglish['d']=4.253	 
-freqEnglish['e']=12.702	 
-freqEnglish['f']=2.228	 
-freqEnglish['g']=2.015	 
-freqEnglish['h']=6.094	 
-freqEnglish['i']=6.966	 
-freqEnglish['j']=0.153	 
-freqEnglish['k']=0.772	 
-freqEnglish['l']=4.025	 
-freqEnglish['m']=2.406	 
-freqEnglish['n']=6.749	 
-freqEnglish['o']=7.507	 
-freqEnglish['p']=1.929	 
-freqEnglish['q']=0.095	 
-freqEnglish['r']=5.987	 
-freqEnglish['s']=6.327	 
-freqEnglish['t']=9.056	 
-freqEnglish['u']=2.758	 
-freqEnglish['v']=0.978	 
-freqEnglish['w']=2.361	 
-freqEnglish['x']=0.150	 
-freqEnglish['y']=1.974	 
-freqEnglish['z']=0.074    
+digramsenglish = read_file('C:/Users/Damien/Documents/GitHub/cipher_challenge/english-digrams.csv')  
+trigramsenglish = read_file(str('C:/Users/Damien/Documents/GitHub/cipher_challenge/english-trigrams.csv'))
+freqEnglish = read_file('C:/Users/Damien/Documents/GitHub/cipher_challenge/english-letter-frequency.csv')  
+
+def read_file(path):
+    with open(path, 'rb') as f:
+        fileCSV = csv.reader(f, delimiter=',')
+        dicti = {}
+        for row in fileCSV:
+            if '#' not in row[0]:
+                dicti[row[0]] = float(row[1])
+    return dicti
+    
+def topN(dictionnary, N):
+    L = sorted(dictionnary, key=dictionnary.get, reverse=True)
+    l = []
+    for i in range(0,N):
+        l.append(L[i])
+    return l
 
 def words(string):
     return nltk.wordpunct_tokenize(string)
@@ -100,12 +92,10 @@ codedDict['F']= 'b'
 codedDict['G']= "l"
 codedDict['H']= 'k'	 
 codedDict['I']= 'n'
-codedDict['J']= 't'	 
-codedDict['K']=	 
+codedDict['J']= 't'	  
 codedDict['L']= 'm'	 
 codedDict['M']= 'a' 
 codedDict['N']= 'd'	 
-codedDict['O']= 
 codedDict['P']= 'h'	 
 codedDict['Q']= 'p'
 codedDict['R']= 's' 
@@ -116,7 +106,6 @@ codedDict['V']= 'r'
 codedDict['W']= 'g'	 
 codedDict['X']= 'e'	 
 codedDict['Y']= 'w'	 
-codedDict['Z']=
 
 decode = ""
 for i in range(0, len(stage1)):
@@ -140,7 +129,6 @@ decodedCode = "in the same hour came north ningers on a man’s hand, and wrote 
 
 
 #Stage 2:
-
 stage2 = "MHILY LZA ZBHL XBPZXBL MVYABUHL HWWPBZ JSHBKPBZ JHLJBZ KPJABT HYJHUBT LZA ULBAYVU"
 freqAnalysis2, totalCharacter2 = frequency(stage2)
 hist(freqAnalysis2)
@@ -267,7 +255,7 @@ for i in range(0,5):
     dic, count =  frequency(alphaB[i])
     listFreq.append(dic)
     
-hist(listFreq[4])
+hist(listFreq[0])
 
 def ceasar (decalage):
     codedDict = {}
@@ -282,12 +270,15 @@ def ceasar (decalage):
 
 
 def decode(text, decalage):
-    clearText = ""
-    dico = ceasar(decalage)
-    for i in range(0, len(text)):
-        clearText += dico[text[i]]
-    print clearText
-    return(clearText)
+    if decalage == 0:
+        return(text)
+    else:
+        clearText = ""
+        dico = ceasar(decalage)
+        for i in range(0, len(text)):
+            clearText += dico[text[i]]
+        print clearText
+        return(clearText)
     
 decode(alphaB[0],18)
 
@@ -295,8 +286,8 @@ hypothesis = []
 hypothesis.append(18)
 hypothesis.append(2)
 hypothesis.append(20)
-hypothesis.append(3)
-hypothesis.append(2)
+hypothesis.append(1)
+hypothesis.append(26)
 
 def vigenere(textList, hypothesis):
     keyLength = len(hypothesis)
@@ -309,7 +300,7 @@ def vigenere(textList, hypothesis):
     for i in range(0, keyLength):
         textLength += len(textList[i])
         decodeList.append(decode(textList[i], hypothesis[i]))
-    while k<textLength:
+    while k<textLength and l<len(textList[keyLength-1]):
         while k<textLength and j < keyLength:
             clearText+=decodeList[j][l]
             j+=1
@@ -317,16 +308,49 @@ def vigenere(textList, hypothesis):
         l+=1        
         j=0
     return(clearText)
-    
+
+
 vigenere(alphaB, hypothesis)
 
-decode = ""
-for char in stage1:
-     if char in L:
-         decode += codedDict[char]
-     else:
-         decode += char
 
+<<<<<<< HEAD
+=======
+alphaBtest = []
+for i in range(0,5):
+    alphaBtest.append([])
+for i in range(0, len(alphaB[0])):
+    alphaBtest[0].append(alphaB[0][i])
+for i in range(0, len(alphaB[1])):
+    alphaBtest[1].append(alphaB[1][i])
+for i in range(0, len(alphaB[2])):
+    alphaBtest[2].append(alphaB[2][i])
+for i in range(0, len(alphaB[3])):
+    alphaBtest[3].append(alphaB[3][i])
+for i in range(0, len(alphaB[4])):
+    alphaBtest[4].append(alphaB[4][i])
+
+alphaBtestDot = []
+for i in range(0,5):
+    alphaBtestDot.append([])
+for i in range(0, len(alphaB[0])):
+    alphaBtestDot[0].append(alphaB[0][i])
+for i in range(0, len(alphaB[1])):
+    alphaBtestDot[1].append(alphaB[1][i])
+for i in range(0, len(alphaB[2])):
+    alphaBtestDot[2].append(alphaB[2][i])
+for i in range(0, len(alphaB[3])):
+    alphaBtestDot[3].append(alphaB[3][i])
+for i in range(0, len(alphaB[4])):
+    alphaBtestDot[4].append(alphaB[4][i])
+
+vigenere(alphaBtest, hypothesis)
+
+#stage 4 Solution:
+stage4sol = '''souventpoursamuserleshommesdequipageprennentdesalbatrosvastesoiseauxdesmersquisuiventindolentscompagnonsdevoyagelenavireglissantsurlesgouffresamersapeinelesontilsdeposessurlesplanchesquecesroisdelazurmaladroitsethonteuxlaissentpiteusementleursgrandesailesblanchescommedesavironstraineracotedeuxcevoyageurailecommeilestgaucheetveuleluinagueresibeauquilestcomiqueetlaidlunagacesonbecavecunbrulegueulelautremimeenboitantlinfirmequivolaitlepoeteestsemblableauprincedesnueesquihantelatempeteetseritdelarcherbaudelaireexilesurlesolaumilieudeshueeslemotpouretagequatreesttrajansesailesdegeantlempechentdemar'''
+#Baudelaire!!
+
+
+>>>>>>> origin/Julie-test
 #Stage 3:
 stage3 = '''IXDVMUFXLFEEFXSOQXYQVXSQTUIXWF*FMXYQVFJ*FXEFQUQX
 JFPTUFXMX*ISSFLQTUQXMXRPQEUMXUMTUIXYFSSFI*MXKFJ
@@ -349,6 +373,7 @@ OQXLQX*NXTIKNXUQVVNXPTXUPVAIXTNSRPQXQXYQVSIEE
 QXLQ*X*QJTIXF*XYVFWIXSNTUIXUVQXKI*UQXF*XDQXJFVBVXSI
 TXUPUUQX*BSRPQXBX*BXRPBVUBX*QKBVX*BXYIYYBXFTXEPEIXQX
 *BXYVIVBXFVQXFTXJFPXSIWB*UVPFXYFBSRPQFTDFTXSOQX*XWBVXDP
+<<<<<<< HEAD
 XEIYVBXTIFXVFSOFPEIXX*BXYBVI*BXFTXSILFSQXQXQRPBUIV'''
 
 stage3 = stage3.replace("\n", "")
@@ -412,3 +437,6 @@ def decodage(text, hyp):
     return clearText
 
 decodage(stage3, hypothese)
+=======
+XEIYVBXTIFXVFSOFPEIXX*BXYBVI*BXFTXSILFSQXQXQRPBUIV'''
+>>>>>>> origin/Julie-test
