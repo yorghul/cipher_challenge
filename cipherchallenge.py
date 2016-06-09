@@ -267,7 +267,7 @@ for i in range(0,5):
     dic, count =  frequency(alphaB[i])
     listFreq.append(dic)
     
-hist(listFreq[4])
+hist(listFreq[0])
 
 def ceasar (decalage):
     codedDict = {}
@@ -282,12 +282,15 @@ def ceasar (decalage):
 
 
 def decode(text, decalage):
-    clearText = ""
-    dico = ceasar(decalage)
-    for i in range(0, len(text)):
-        clearText += dico[text[i]]
-    print clearText
-    return(clearText)
+    if decalage == 0:
+        return(text)
+    else:
+        clearText = ""
+        dico = ceasar(decalage)
+        for i in range(0, len(text)):
+            clearText += dico[text[i]]
+        print clearText
+        return(clearText)
     
 decode(alphaB[0],18)
 
@@ -295,8 +298,8 @@ hypothesis = []
 hypothesis.append(18)
 hypothesis.append(2)
 hypothesis.append(20)
-hypothesis.append(3)
-hypothesis.append(2)
+hypothesis.append(1)
+hypothesis.append(26)
 
 def vigenere(textList, hypothesis):
     keyLength = len(hypothesis)
@@ -309,7 +312,7 @@ def vigenere(textList, hypothesis):
     for i in range(0, keyLength):
         textLength += len(textList[i])
         decodeList.append(decode(textList[i], hypothesis[i]))
-    while k<textLength:
+    while k<textLength and l<len(textList[keyLength-1]):
         while k<textLength and j < keyLength:
             clearText+=decodeList[j][l]
             j+=1
@@ -317,13 +320,66 @@ def vigenere(textList, hypothesis):
         l+=1        
         j=0
     return(clearText)
-    
+
+
 vigenere(alphaB, hypothesis)
 
-decode = ""
-for char in stage1:
-     if char in L:
-         decode += codedDict[char]
-     else:
-         decode += char
 
+alphaBtest = []
+for i in range(0,5):
+    alphaBtest.append([])
+for i in range(0, len(alphaB[0])):
+    alphaBtest[0].append(alphaB[0][i])
+for i in range(0, len(alphaB[1])):
+    alphaBtest[1].append(alphaB[1][i])
+for i in range(0, len(alphaB[2])):
+    alphaBtest[2].append(alphaB[2][i])
+for i in range(0, len(alphaB[3])):
+    alphaBtest[3].append(alphaB[3][i])
+for i in range(0, len(alphaB[4])):
+    alphaBtest[4].append(alphaB[4][i])
+
+alphaBtestDot = []
+for i in range(0,5):
+    alphaBtestDot.append([])
+for i in range(0, len(alphaB[0])):
+    alphaBtestDot[0].append(alphaB[0][i])
+for i in range(0, len(alphaB[1])):
+    alphaBtestDot[1].append(alphaB[1][i])
+for i in range(0, len(alphaB[2])):
+    alphaBtestDot[2].append(alphaB[2][i])
+for i in range(0, len(alphaB[3])):
+    alphaBtestDot[3].append(alphaB[3][i])
+for i in range(0, len(alphaB[4])):
+    alphaBtestDot[4].append(alphaB[4][i])
+
+vigenere(alphaBtest, hypothesis)
+
+#stage 4 Solution:
+stage4sol = '''souventpoursamuserleshommesdequipageprennentdesalbatrosvastesoiseauxdesmersquisuiventindolentscompagnonsdevoyagelenavireglissantsurlesgouffresamersapeinelesontilsdeposessurlesplanchesquecesroisdelazurmaladroitsethonteuxlaissentpiteusementleursgrandesailesblanchescommedesavironstraineracotedeuxcevoyageurailecommeilestgaucheetveuleluinagueresibeauquilestcomiqueetlaidlunagacesonbecavecunbrulegueulelautremimeenboitantlinfirmequivolaitlepoeteestsemblableauprincedesnueesquihantelatempeteetseritdelarcherbaudelaireexilesurlesolaumilieudeshueeslemotpouretagequatreesttrajansesailesdegeantlempechentdemar'''
+#Baudelaire!!
+
+
+#Stage 3:
+stage3 = '''IXDVMUFXLFEEFXSOQXYQVXSQTUIXWF*FMXYQVFJ*FXEFQUQX
+JFPTUFXMX*ISSFLQTUQXMXRPQEUMXUMTUIXYFSSFI*MXKFJ
+F*FMXLQXTIEUVFXEQTEFXSOQXLQ*XVFWMTQTUQXTITXKIJ*F
+MUQXTQJMVX*QEYQVFQTHMXLFVQUVIXM*XEI*XLQ*XWITLIXE
+QTHGXJQTUQXSITEFLQVGUQX*GXKIEUVGXEQWQTHGXDGUFXTIT
+XDIEUQXGXKFKQVXSIWQXAVPUFXWGXYQVXEQJPFVXKFVUPUQXQX
+SGTIESQTHGX*FXWFQFXSIWYGJTFXDQSFIXEFXGJPUFXSITXRPQEUG
+XIVGHFITXYFSSFI*CXC*XSCWWFTIXSOQXCXYQTCXYIESFCX*FXCKV
+QFXVFUQTPUFXQXKI*UCXTIEUVCXYIYYCXTQ*XWCUUFTIXLQFXVQW
+FXDCSQWWIXC*FXC*XDI**QXKI*IXEQWYVQXCSRPFEUCTLIXLC*X*C
+UIXWCTSFTIXUPUUQX*QXEUQ**QXJFCXLQX*C*UVIXYI*IXKQLQCX*CX
+TIUUQXQX*XTIEUVIXUCTUIXACEEIXSOQXTITXEPVJQCXDPIVXLQ*X
+WCVFTXEPI*IXSFTRPQXKI*UQXVCSSQEIXQXUCTUIXSCEEIX*IX*PWQ
+XQVZXLFXEIUUIXLZX*ZX*PTZXYIFXSOQXTUVZUFXQVZKZWXTQX*Z*
+UIXYZEEIRPZTLIXTZYYZVKQXPTZXWITUZJTZXAVPTZXYQVX*ZXLFEUZT
+HZXQXYZVKQWFXZ*UZXUZTUIXRPZTUIXKQLPUZXTITXZKQZ
+XZ*SPTZXTIFXSFXZ**QJVNWWIXQXUIEUIXUIVTIXFTXYFNTUIXS
+OQXLQX*NXTIKNXUQVVNXPTXUPVAIXTNSRPQXQXYQVSIEE
+QXLQ*X*QJTIXF*XYVFWIXSNTUIXUVQXKI*UQXF*XDQXJFVBVXSI
+TXUPUUQX*BSRPQXBX*BXRPBVUBX*QKBVX*BXYIYYBXFTXEPEIXQX
+*BXYVIVBXFVQXFTXJFPXSIWB*UVPFXYFBSRPQFTDFTXSOQX*XWBVXDP
+XEIYVBXTIFXVFSOFPEIXX*BXYBVI*BXFTXSILFSQXQXQRPBUIV'''
