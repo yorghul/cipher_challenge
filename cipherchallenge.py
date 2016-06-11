@@ -12,10 +12,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
 
-digramsenglish = read_file('C:/Users/Damien/Documents/GitHub/cipher_challenge/english-digrams.csv')  
-trigramsenglish = read_file(str('C:/Users/Damien/Documents/GitHub/cipher_challenge/english-trigrams.csv'))
-freqEnglish = read_file('C:/Users/Damien/Documents/GitHub/cipher_challenge/english-letter-frequency.csv')  
-
 def read_file(path):
     with open(path, 'rb') as f:
         fileCSV = csv.reader(f, delimiter=',')
@@ -25,6 +21,11 @@ def read_file(path):
                 dicti[row[0]] = float(row[1])
     return dicti
     
+digramsenglish = read_file('C:/Users/Damien/Documents/GitHub/cipher_challenge/english-digrams.csv')  
+trigramsenglish = read_file(str('C:/Users/Damien/Documents/GitHub/cipher_challenge/english-trigrams.csv'))
+freqEnglish = read_file('C:/Users/Damien/Documents/GitHub/cipher_challenge/english-letter-frequency.csv')  
+
+
 def topN(dictionnary, N):
     L = sorted(dictionnary, key=dictionnary.get, reverse=True)
     l = []
@@ -312,9 +313,6 @@ def vigenere(textList, hypothesis):
 
 vigenere(alphaB, hypothesis)
 
-
-<<<<<<< HEAD
-=======
 alphaBtest = []
 for i in range(0,5):
     alphaBtest.append([])
@@ -349,8 +347,6 @@ vigenere(alphaBtest, hypothesis)
 stage4sol = '''souventpoursamuserleshommesdequipageprennentdesalbatrosvastesoiseauxdesmersquisuiventindolentscompagnonsdevoyagelenavireglissantsurlesgouffresamersapeinelesontilsdeposessurlesplanchesquecesroisdelazurmaladroitsethonteuxlaissentpiteusementleursgrandesailesblanchescommedesavironstraineracotedeuxcevoyageurailecommeilestgaucheetveuleluinagueresibeauquilestcomiqueetlaidlunagacesonbecavecunbrulegueulelautremimeenboitantlinfirmequivolaitlepoeteestsemblableauprincedesnueesquihantelatempeteetseritdelarcherbaudelaireexilesurlesolaumilieudeshueeslemotpouretagequatreesttrajansesailesdegeantlempechentdemar'''
 #Baudelaire!!
 
-
->>>>>>> origin/Julie-test
 #Stage 3:
 stage3 = '''IXDVMUFXLFEEFXSOQXYQVXSQTUIXWF*FMXYQVFJ*FXEFQUQX
 JFPTUFXMX*ISSFLQTUQXMXRPQEUMXUMTUIXYFSSFI*MXKFJ
@@ -373,7 +369,6 @@ OQXLQX*NXTIKNXUQVVNXPTXUPVAIXTNSRPQXQXYQVSIEE
 QXLQ*X*QJTIXF*XYVFWIXSNTUIXUVQXKI*UQXF*XDQXJFVBVXSI
 TXUPUUQX*BSRPQXBX*BXRPBVUBX*QKBVX*BXYIYYBXFTXEPEIXQX
 *BXYVIVBXFVQXFTXJFPXSIWB*UVPFXYFBSRPQFTDFTXSOQX*XWBVXDP
-<<<<<<< HEAD
 XEIYVBXTIFXVFSOFPEIXX*BXYBVI*BXFTXSILFSQXQXQRPBUIV'''
 
 stage3 = stage3.replace("\n", "")
@@ -394,7 +389,7 @@ def frequency(codedText):
     
     
 charFreq = frequency(stage3)
-hist(charFreq)
+#hist(charFreq)
 
 def trigram(text):
     dictFreqGroup = {}
@@ -437,6 +432,4 @@ def decodage(text, hyp):
     return clearText
 
 decodage(stage3, hypothese)
-=======
-XEIYVBXTIFXVFSOFPEIXX*BXYBVI*BXFTXSILFSQXQXQRPBUIV'''
->>>>>>> origin/Julie-test
+
