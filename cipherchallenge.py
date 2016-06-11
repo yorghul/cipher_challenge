@@ -373,7 +373,6 @@ OQXLQX*NXTIKNXUQVVNXPTXUPVAIXTNSRPQXQXYQVSIEE
 QXLQ*X*QJTIXF*XYVFWIXSNTUIXUVQXKI*UQXF*XDQXJFVBVXSI
 TXUPUUQX*BSRPQXBX*BXRPBVUBX*QKBVX*BXYIYYBXFTXEPEIXQX
 *BXYVIVBXFVQXFTXJFPXSIWB*UVPFXYFBSRPQFTDFTXSOQX*XWBVXDP
-<<<<<<< HEAD
 XEIYVBXTIFXVFSOFPEIXX*BXYBVI*BXFTXSILFSQXQXQRPBUIV'''
 
 stage3 = stage3.replace("\n", "")
@@ -402,7 +401,6 @@ def trigram(text):
     for j in range(0, length - 2):
         init = text[j:j+3]
         dictFreqGroup[init] = []
-        count = 1
         i = 1
         print(init)
         while (i < length):
@@ -421,9 +419,12 @@ tris = trigram(stage3)
 
 hypothese = {}
 hypothese['X']=''
-hypothese['Q']='t'
-
-
+hypothese['Q']='e'
+hypothese['I']='a'
+hypothese['*']='t'
+hypothese['U']='s'
+hypothese['S']='c'
+hypothese['O']='h'
 
 
 def decodage(text, hyp):
@@ -437,6 +438,4 @@ def decodage(text, hyp):
     return clearText
 
 decodage(stage3, hypothese)
-=======
-XEIYVBXTIFXVFSOFPEIXX*BXYBVI*BXFTXSILFSQXQXQRPBUIV'''
->>>>>>> origin/Julie-test
+
