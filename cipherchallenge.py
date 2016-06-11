@@ -397,7 +397,6 @@ def trigram(text):
     for j in range(0, length - 2):
         init = text[j:j+3]
         dictFreqGroup[init] = []
-        count = 1
         i = 1
         print(init)
         while (i < length):
@@ -416,9 +415,12 @@ tris = trigram(stage3)
 
 hypothese = {}
 hypothese['X']=''
-hypothese['Q']='t'
-
-
+hypothese['Q']='e'
+hypothese['I']='a'
+hypothese['*']='t'
+hypothese['U']='s'
+hypothese['S']='c'
+hypothese['O']='h'
 
 
 def decodage(text, hyp):
