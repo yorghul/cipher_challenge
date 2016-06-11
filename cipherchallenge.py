@@ -313,6 +313,8 @@ def vigenere(textList, hypothesis):
 vigenere(alphaB, hypothesis)
 
 
+<<<<<<< HEAD
+=======
 alphaBtest = []
 for i in range(0,5):
     alphaBtest.append([])
@@ -348,6 +350,7 @@ stage4sol = '''souventpoursamuserleshommesdequipageprennentdesalbatrosvastesoise
 #Baudelaire!!
 
 
+>>>>>>> origin/Julie-test
 #Stage 3:
 stage3 = '''IXDVMUFXLFEEFXSOQXYQVXSQTUIXWF*FMXYQVFJ*FXEFQUQX
 JFPTUFXMX*ISSFLQTUQXMXRPQEUMXUMTUIXYFSSFI*MXKFJ
@@ -370,4 +373,70 @@ OQXLQX*NXTIKNXUQVVNXPTXUPVAIXTNSRPQXQXYQVSIEE
 QXLQ*X*QJTIXF*XYVFWIXSNTUIXUVQXKI*UQXF*XDQXJFVBVXSI
 TXUPUUQX*BSRPQXBX*BXRPBVUBX*QKBVX*BXYIYYBXFTXEPEIXQX
 *BXYVIVBXFVQXFTXJFPXSIWB*UVPFXYFBSRPQFTDFTXSOQX*XWBVXDP
+<<<<<<< HEAD
 XEIYVBXTIFXVFSOFPEIXX*BXYBVI*BXFTXSILFSQXQXQRPBUIV'''
+
+stage3 = stage3.replace("\n", "")
+
+def frequency(codedText):
+    dictionnary = {}
+    countTotal = 0
+    for char in list(string.ascii_uppercase):
+        dictionnary[char] = 0
+    dictionnary['*']=0
+    for char in codedText:
+        if char in dictionnary.keys():
+            dictionnary[char] += 1
+            countTotal += 1
+    for key in dictionnary.keys():
+        dictionnary[key] = round(dictionnary[key]*100.0/countTotal,1)
+    return(dictionnary, countTotal)
+    
+    
+charFreq = frequency(stage3)
+hist(charFreq)
+
+def trigram(text):
+    dictFreqGroup = {}
+    length = len(text)
+    for j in range(0, length - 2):
+        init = text[j:j+3]
+        dictFreqGroup[init] = []
+        count = 1
+        i = 1
+        print(init)
+        while (i < length):
+            if ((text[i:i+3]) == init):    
+                print(text[i:i+3])
+                print("Count " + str(count))
+                dictFreqGroup[init].append(count)        
+                count = 1
+                i+=1                
+            else:
+                count +=1
+                i+=1
+    return dictFreqGroup
+    
+tris = trigram(stage3)
+
+hypothese = {}
+hypothese['X']=''
+hypothese['Q']='t'
+
+
+
+
+def decodage(text, hyp):
+    clearText = ""
+    for i in range(0, len(text)):
+        char = text[i]
+        if char in hyp.keys():
+            clearText+= hyp[char]
+        else:
+            clearText+= text[i]
+    return clearText
+
+decodage(stage3, hypothese)
+=======
+XEIYVBXTIFXVFSOFPEIXX*BXYBVI*BXFTXSILFSQXQXQRPBUIV'''
+>>>>>>> origin/Julie-test
