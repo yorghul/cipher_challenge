@@ -18,6 +18,7 @@ def digram(text):
         count = 1
         i = 1
         print(init)
+        count = 1
         while (i < length):
             if ((text[i:i+2]) == init):    
                 print(text[i:i+2])
@@ -39,6 +40,7 @@ def quadrigram(text):
         count = 1
         i = 1
         print(init)
+        count = 1
         while (i < length):
             if ((text[i:i+4]) == init):    
                 print(text[i:i+4])
@@ -87,7 +89,7 @@ hypotheses = {}
 hypotheses['X'] = ' '
 hypotheses['Q'] = 'e'
 hypotheses['I'] = 'a'
-#F ends a lot of words => o
+#F ends a lot of words => i
 hypotheses['F'] = 'i'
 
 #trigrams SOe frequents => che, + frequencies of S and O matches c and h
@@ -95,9 +97,26 @@ hypotheses['S'] = 'c'
 hypotheses['O'] = 'h'
 
 #iT frequent => T in l
-hypotheses['T'] = 'l'
+#hypotheses['T'] = 'l'
 #trigrams lUa frequents => U in l
-hypotheses['U'] = 'l'
+#hypotheses['U'] = 'l'
+##triagrams aEl =? all
+#hypotheses['E'] = 'l'
+###word lMlla + frequency M => M in o
+#hypotheses['M'] = 'o'
+#
+##word caMice + frequency => L in m
+#hypotheses['L'] = 'm'
+#
+##word miEEi + frequency
+#hypotheses['E'] = 's'
+#
+##VichiPsa = richiusa 
+#hypotheses['V'] = 'r'
+#hypotheses['P'] = 'u'
+##Droli = broli
+#hypotheses['D'] = 'b'
+
 stage3hyp = cipher.decodage(stage3, hypotheses)
 stage3hyp = stage3hyp.replace(" ", "_")
 trigrams = cipher.trigram(stage3hyp)

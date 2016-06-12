@@ -399,6 +399,7 @@ def trigram(text):
         dictFreqGroup[init] = []
         i = 1
         print(init)
+        count = 1
         while (i < length):
             if ((text[i:i+3]) == init):    
                 print(text[i:i+3])
