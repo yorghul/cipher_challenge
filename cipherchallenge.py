@@ -396,32 +396,30 @@ def trigram(text):
     length = len(text)
     for j in range(0, length - 2):
         init = text[j:j+3]
-        dictFreqGroup[init] = []
-        i = 1
+        count = 0
+        i=0
         print(init)
-        while (i < length):
-            if ((text[i:i+3]) == init):    
-                print(text[i:i+3])
-                print("Count " + str(count))
-                dictFreqGroup[init].append(count)        
-                count = 1
+        while (i < length - 2):
+            if ((text[i:i+3]) == init):         
+                count += 1
                 i+=1                
             else:
-                count +=1
                 i+=1
+        if count > 1:
+            dictFreqGroup[init]=count
     return dictFreqGroup
     
 tris = trigram(stage3)
 
+
+
 hypothese = {}
 hypothese['X']=''
-hypothese['Q']='e'
-hypothese['I']='a'
-hypothese['*']='t'
-hypothese['U']='s'
-hypothese['S']='c'
-hypothese['O']='h'
-
+hypothese['Q']='a'
+hypothese['I']='o'
+hypothese['T']='r'
+hypothese['U']='n'
+hypothese['F']='s'
 
 def decodage(text, hyp):
     clearText = ""
@@ -433,5 +431,9 @@ def decodage(text, hyp):
             clearText+= text[i]
     return clearText
 
+noX = decodage(stage3, {'X':''})
+tris = trigram(noX)
+
 decodage(stage3, hypothese)
 
+topN(tris, 20)
