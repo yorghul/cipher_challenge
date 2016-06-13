@@ -616,36 +616,20 @@ def frequency(codedText):
     
 charFreq = frequency(stage6)
 
-def decodage(text, hyp):
+def decodageDi(text, hyp):
     clearText = ""
-    for i in range(0, len(text)):
-        char = text[i]
-        if char in hyp.keys():
-            clearText+= hyp[char]
+    for i in range(0, len(text), 3):
+        di = text[i:i+2]
+        print(di)
+        if di in hyp.keys():
+            clearText+= hyp[di]
+            clearText+='-'
         else:
-            clearText+= text[i]
+            clearText+= di
+            clearText+='-'
     return clearText
-    
-    
-def trigram(text):
-    dictFreqGroup = {}
-    length = len(text)
-    for j in range(0, length - 2):
-        init = text[j:j+3]
-        count = 0
-        i=0
-        print(init)
-        while (i < length - 2):
-            if ((text[i:i+3]) == init):         
-                count += 1
-                i+=1                
-            else:
-                i+=1
-        if count > 1:
-            dictFreqGroup[init]=count
-    return dictFreqGroup
 
-tris = trigram(stage6)
+
 
 def digram(text):
     dictFreqGroup = {}
@@ -666,3 +650,51 @@ def digram(text):
     return dictFreqGroup
     
 dis = digram(stage6)
+
+    
+    
+def quadrigram(text):
+    dictFreqGroup = {}
+    length = len(text)
+    for j in range(0, length, 3):
+        init = text[j:j+5]
+        count = 0
+        i=0
+        print(init)
+        while (i < length - 4):
+            if ((text[i:i+5]) == init):         
+                count += 1
+                i+=3                
+            else:
+                i+=3
+        if count > 1:
+            dictFreqGroup[init]=count
+    return dictFreqGroup
+    
+quadris = quadrigram(stage6S)
+
+def topN(dictionnary, N):
+    L = sorted(dictionnary, key=dictionnary.get, reverse=True)
+    l = []
+    for i in range(0,N):
+        l.append(L[i])
+    return l
+
+commonDis = topN(dis, 10)
+
+stage6S = ''''''
+for i in range(0, len(stage6), 2):
+    stage6S+=stage6[i]
+    stage6S+=stage6[i+1]
+    stage6S+='-'
+
+hypothese = {}
+hypothese['FO']='th'
+hypothese['LB']='at'
+hypothese['RS']='er'
+hypothese['OF']='ht'
+hypothese['BL']='ta'
+hypothese['SR']='re'
+
+
+decodageDi(stage6S,hypothese)
