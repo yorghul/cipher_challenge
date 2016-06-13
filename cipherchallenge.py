@@ -373,6 +373,8 @@ XEIYVBXTIFXVFSOFPEIXX*BXYBVI*BXFTXSILFSQXQXQRPBUIV'''
 
 stage3 = stage3.replace("\n", "")
 
+stage3 = stage3.replace('X', ' ')
+
 def frequency(codedText):
     dictionnary = {}
     countTotal = 0
@@ -385,7 +387,7 @@ def frequency(codedText):
             countTotal += 1
     for key in dictionnary.keys():
         dictionnary[key] = round(dictionnary[key]*100.0/countTotal,1)
-    return(dictionnary, countTotal)
+    return dictionnary
     
     
 charFreq = frequency(stage3)
@@ -396,33 +398,70 @@ def trigram(text):
     length = len(text)
     for j in range(0, length - 2):
         init = text[j:j+3]
-        dictFreqGroup[init] = []
-        i = 1
+        count = 0
+        i=0
         print(init)
-        count = 1
-        while (i < length):
-            if ((text[i:i+3]) == init):    
-                print(text[i:i+3])
-                print("Count " + str(count))
-                dictFreqGroup[init].append(count)        
-                count = 1
+        while (i < length - 2):
+            if ((text[i:i+3]) == init):         
+                count += 1
                 i+=1                
             else:
-                count +=1
                 i+=1
+        if count > 1:
+            dictFreqGroup[init]=count
     return dictFreqGroup
-    
+
 tris = trigram(stage3)
 
 hypothese = {}
-hypothese['X']=''
-hypothese['Q']='e'
-hypothese['I']='a'
-hypothese['*']='t'
-hypothese['U']='s'
-hypothese['S']='c'
-hypothese['O']='h'
+hypothese['X']=' '
+hypothese['T']='n'
+hypothese['I']='o' #non = TIT
+# hypothese['F']='u' - FT = un --> NOK. Obligation: F = i
+# S = f,t, d, n, s
+#N,Z,B = a,e,i,o,u
+#P=a,i,o,p,u
+#Y=c,n,p
+#F,M=a,d,e,h,i
+hypothese['F']='i'
+#hypothese['*']='c' not good, come up with n?c
+#Q=e,o -- only e if E=s
+#E=c,s
+#U=c,n,t,z from no***
+#*=l,n,p
+#from ?i?i?i?, get M=o,a,s,e,i
+#o???ion = opinion?? -- no good, P NOK
 
+hypothese['V']='r'
+hypothese['U']='t'
+hypothese['E']='s'
+hypothese['*']='l'
+hypothese['L']='d'
+hypothese['Y']='p'
+hypothese['Z']='a'
+hypothese['W']='m'
+hypothese['B']='a'
+hypothese['Q']='e'
+hypothese['S']='c'
+hypothese['C']='a'
+hypothese['J']='g'
+hypothese['O']='h'
+hypothese['D']='v'
+hypothese['G']='a'
+hypothese['P']='u'
+hypothese['R']='q'
+hypothese['M']='a'
+hypothese['H']='z'
+hypothese['K']='v'
+hypothese['A']='b'
+hypothese['N']='o'
+
+#P=e,u
+#B=e,a
+#N=e,a,o
+#K=e,u,v
+
+#voyelles: I, M, Q, T, 
 
 def decodage(text, hyp):
     clearText = ""
@@ -436,3 +475,194 @@ def decodage(text, hyp):
 
 decodage(stage3, hypothese)
 
+
+def smallWords(text, wlen):
+    dico = {}
+    leng = len(text)
+    i = 0
+    for i in range(0, leng):
+        if text[i]==' ':
+            for j in range(0, wlen):
+                if text[i+j+2]==' ':
+                   word = text[i+1:i+j+2]
+                   if word in dico.keys():
+                       dico[word]+=1
+                   else:
+                       dico[word]=1
+    return dico
+
+shorties = smallWords(stage3, 3)
+
+def permu(xs):
+    if xs:
+        r , h = [],[]
+        for x in xs:
+            if x not in h:
+                ts = xs[:]; ts.remove(x)
+                for p in permu(ts):
+                    r.append([x]+p)
+            h.append(x)
+        return r
+    else:
+        return [[]]
+        
+        
+permu([1,2,3,4,5])
+
+def options(freqCoded, freqClear, error):
+    alphaCod = freqCoded.keys()
+    alphaClear = freqClear.keys()
+    permuCod = permu(alphaCod)
+    hypotheses = []
+    length = len(freqCoded)
+    for i in range(0, len(permuCod)):
+            k = 0
+            dico = {}
+            cod = permuCod[i] 
+            while (k < length) and (freqCoded[cod[k]]<=freqClear[alphaClear[k]]*error):
+                dico[permuCod[i][k]]=alphaClear[k]          
+                k+=1
+            if k == length:
+                hypotheses.append(dico)
+    return hypotheses
+
+
+commons = {}
+for i in tris.keys():
+    tri = tris[i] 
+    if tri >3 and i[1] <>' ' and i[0] <>' ' and i[2] <>' ':
+        commons[i] = tri
+        
+freqIta = {}
+freqIta['e']=11.49
+freqIta['a']=10.85
+freqIta['i']=10.18
+freqIta['o']=9.97
+freqIta['n']=7.02
+freqIta['t']=6.97
+freqIta['r']=6.19
+freqIta['l']=5.7
+freqIta['s']=5.5
+freqIta['c']=4.3
+
+
+
+freqCode = {}
+freqCode['Q']=11.3
+freqCode['I']=9.7
+freqCode['F']=8.6
+freqCode['T']=7.9
+freqCode['U']=7.7
+freqCode['*']=6.8
+freqCode['V']=6.1
+freqCode['E']=4.6
+freqCode['S']=4.6
+
+try1 = options(freqCode, freqIta, 1.3)
+
+
+for i in range(0,len(try1)):
+    print decodage(stage3, try1[i])
+    print '\n'
+
+
+#Stage 6
+stage6 = '''OCOYFOLBVNPIASAKOPVYGESKOVMUFGUWMLNOOEDRNCFORSO
+
+    CVMTUUTYERPFOLBVNPIASAKOPVIVKYEOCNKOCCARICVVLTS
+
+    OCOYTRFDVCVOOUEGKPVOOYVKTHZSCVMBTWTRHPNKLRCUEGM
+
+    SLNVLZSCANSCKOPORMZCKIZUSLCCVFDLVORTHZSCLEGUXMI
+
+    FOLBIMVIVKIUAYVUUFVWVCCBOVOVPFRHCACSFGEOLCKMOCG
+
+    EUMOHUEBRLXRHEMHPBMPLTVOEDRNCFORSGISTHOGILCVAIO
+
+    AMVZIRRLNIIWUSGEWSRHCAUGIMFORSKVZMGCLBCGDRNKCVC
+
+    PYUXLOKFYFOLBVCCKDOKUUHAVOCOCLCIUSYCRGUFHBEVKRO
+
+    ICSVPFTUQUMKIGPECEMGCGPGGMOQUSYEFVGFHRALAUQOLEV
+
+    KROEOKMUQIRXCCBCVMAODCLANOYNKBMVSMVCNVROEDRNCGE
+
+    SKYSYSLUUXNKGEGMZGRSONLCVAGEBGLBIMORDPROCKINANK
+
+    VCNFOLBCEUMNKPTVKTCGEFHOKPDULXSUEOPCLANOYNKVKBU
+
+    OYODORSNXLCKMGLVCVGRMNOPOYOFOCVKOCVKVWOFCLANYEF
+
+    VUAVNRPNCWMIPORDGLOSHIMOCNMLCCVGRMNOPOYHXAIFOOU
+
+    EPGCHK'''
+    
+stage6 = stage6.replace('\n', '')
+stage6 = stage6.replace(' ', '')
+
+def frequency(codedText):
+    dictionnary = {}
+    countTotal = 0
+    for char in list(string.ascii_uppercase):
+        dictionnary[char] = 0
+    for char in codedText:
+        if char in dictionnary.keys():
+            dictionnary[char] += 1
+            countTotal += 1
+    for key in dictionnary.keys():
+        dictionnary[key] = round(dictionnary[key]*100.0/countTotal,1)
+    return dictionnary
+    
+    
+charFreq = frequency(stage6)
+
+def decodage(text, hyp):
+    clearText = ""
+    for i in range(0, len(text)):
+        char = text[i]
+        if char in hyp.keys():
+            clearText+= hyp[char]
+        else:
+            clearText+= text[i]
+    return clearText
+    
+    
+def trigram(text):
+    dictFreqGroup = {}
+    length = len(text)
+    for j in range(0, length - 2):
+        init = text[j:j+3]
+        count = 0
+        i=0
+        print(init)
+        while (i < length - 2):
+            if ((text[i:i+3]) == init):         
+                count += 1
+                i+=1                
+            else:
+                i+=1
+        if count > 1:
+            dictFreqGroup[init]=count
+    return dictFreqGroup
+
+tris = trigram(stage6)
+
+def digram(text):
+    dictFreqGroup = {}
+    length = len(text)
+    for j in range(0, length - 1, 2):
+        init = text[j:j+2]
+        count = 0
+        i=0
+        print(init)
+        while (i < length - 1):
+            if ((text[i:i+2]) == init):         
+                count += 1
+                i+=2              
+            else:
+                i+=2
+        if count > 1:
+            dictFreqGroup[init]=count
+    return dictFreqGroup
+    
+dis = digram(stage6)
