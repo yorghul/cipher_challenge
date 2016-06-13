@@ -564,3 +564,105 @@ try1 = options(freqCode, freqIta, 1.3)
 for i in range(0,len(try1)):
     print decodage(stage3, try1[i])
     print '\n'
+
+
+#Stage 6
+stage6 = '''OCOYFOLBVNPIASAKOPVYGESKOVMUFGUWMLNOOEDRNCFORSO
+
+    CVMTUUTYERPFOLBVNPIASAKOPVIVKYEOCNKOCCARICVVLTS
+
+    OCOYTRFDVCVOOUEGKPVOOYVKTHZSCVMBTWTRHPNKLRCUEGM
+
+    SLNVLZSCANSCKOPORMZCKIZUSLCCVFDLVORTHZSCLEGUXMI
+
+    FOLBIMVIVKIUAYVUUFVWVCCBOVOVPFRHCACSFGEOLCKMOCG
+
+    EUMOHUEBRLXRHEMHPBMPLTVOEDRNCFORSGISTHOGILCVAIO
+
+    AMVZIRRLNIIWUSGEWSRHCAUGIMFORSKVZMGCLBCGDRNKCVC
+
+    PYUXLOKFYFOLBVCCKDOKUUHAVOCOCLCIUSYCRGUFHBEVKRO
+
+    ICSVPFTUQUMKIGPECEMGCGPGGMOQUSYEFVGFHRALAUQOLEV
+
+    KROEOKMUQIRXCCBCVMAODCLANOYNKBMVSMVCNVROEDRNCGE
+
+    SKYSYSLUUXNKGEGMZGRSONLCVAGEBGLBIMORDPROCKINANK
+
+    VCNFOLBCEUMNKPTVKTCGEFHOKPDULXSUEOPCLANOYNKVKBU
+
+    OYODORSNXLCKMGLVCVGRMNOPOYOFOCVKOCVKVWOFCLANYEF
+
+    VUAVNRPNCWMIPORDGLOSHIMOCNMLCCVGRMNOPOYHXAIFOOU
+
+    EPGCHK'''
+    
+stage6 = stage6.replace('\n', '')
+stage6 = stage6.replace(' ', '')
+
+def frequency(codedText):
+    dictionnary = {}
+    countTotal = 0
+    for char in list(string.ascii_uppercase):
+        dictionnary[char] = 0
+    for char in codedText:
+        if char in dictionnary.keys():
+            dictionnary[char] += 1
+            countTotal += 1
+    for key in dictionnary.keys():
+        dictionnary[key] = round(dictionnary[key]*100.0/countTotal,1)
+    return dictionnary
+    
+    
+charFreq = frequency(stage6)
+
+def decodage(text, hyp):
+    clearText = ""
+    for i in range(0, len(text)):
+        char = text[i]
+        if char in hyp.keys():
+            clearText+= hyp[char]
+        else:
+            clearText+= text[i]
+    return clearText
+    
+    
+def trigram(text):
+    dictFreqGroup = {}
+    length = len(text)
+    for j in range(0, length - 2):
+        init = text[j:j+3]
+        count = 0
+        i=0
+        print(init)
+        while (i < length - 2):
+            if ((text[i:i+3]) == init):         
+                count += 1
+                i+=1                
+            else:
+                i+=1
+        if count > 1:
+            dictFreqGroup[init]=count
+    return dictFreqGroup
+
+tris = trigram(stage6)
+
+def digram(text):
+    dictFreqGroup = {}
+    length = len(text)
+    for j in range(0, length - 1, 2):
+        init = text[j:j+2]
+        count = 0
+        i=0
+        print(init)
+        while (i < length - 1):
+            if ((text[i:i+2]) == init):         
+                count += 1
+                i+=2              
+            else:
+                i+=2
+        if count > 1:
+            dictFreqGroup[init]=count
+    return dictFreqGroup
+    
+dis = digram(stage6)
