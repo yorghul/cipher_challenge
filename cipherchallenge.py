@@ -645,7 +645,7 @@ def digram(text):
                 i+=2              
             else:
                 i+=2
-        if count > 1:
+        if count > 0:
             dictFreqGroup[init]=count
     return dictFreqGroup
     
@@ -653,7 +653,7 @@ dis = digram(stage6)
 
     
     
-def quadrigram(text):
+def quadrigramDash(text):
     dictFreqGroup = {}
     length = len(text)
     for j in range(0, length, 3):
@@ -670,8 +670,25 @@ def quadrigram(text):
         if count > 1:
             dictFreqGroup[init]=count
     return dictFreqGroup
+
+def quadrigram(text):
+    dictFreqGroup = {}
+    length = len(text)
+    for j in range(0, length, 2):
+        init = text[j:j+4]
+        count = 0
+        i=0
+        print(init)
+        while (i < length - 3):
+            if ((text[i:i+4]) == init):         
+                count += 1
+                i+=2               
+            else:
+                i+=2
+            dictFreqGroup[init]=count
+    return dictFreqGroup
     
-quadris = quadrigram(stage6S)
+quadris = quadrigram(stage6)
 
 def topN(dictionnary, N):
     L = sorted(dictionnary, key=dictionnary.get, reverse=True)
@@ -690,11 +707,66 @@ for i in range(0, len(stage6), 2):
 
 hypothese = {}
 hypothese['FO']='th'
-hypothese['LB']='at'
-hypothese['RS']='er'
+hypothese['LB']='er'
+hypothese['RS']='at'
 hypothese['OF']='ht'
-hypothese['BL']='ta'
-hypothese['SR']='re'
+hypothese['BL']='re'
+hypothese['SR']='ta'
+hypothese['OC']='he'
+hypothese['CO']='eh'
+
 
 
 decodageDi(stage6S,hypothese)
+
+def playfairSearch(di, key):
+        positions = [[],[]]
+        j = 0
+        k = 0
+        while j < 5:
+            while k < 5:
+                if key[j][k]==di[0]:
+                    positions[0]=[j,k]
+                elif key[j][k]==di[1]:
+                     positions[1]=[j,k]
+                k+=1
+            j+=1
+            k=0
+        return positions
+        
+playfairSearch('', testKey)
+testKey[0][0]
+
+def playfairDecrypt(text, key):
+    l = len(text)
+    clearText = ''
+    for i in range(0, l, 2):
+        positions = playfairSearch(text[i:i+2].lower(), key)
+        if positions[0][0]==positions[1][0]:
+            if positions[0][1]>0:
+                clearText+=key[positions[0][0]][positions[0][1]-1]
+            else:
+                clearText+=key[positions[0][0]][4]
+            if positions[1][1]>0:
+                clearText+=key[positions[1][0]][positions[1][1]-1]
+            else:
+                clearText+=key[positions[1][0]][4]  
+        elif positions[0][1]==positions[1][1]:
+            if positions[0][0]>0:
+                clearText+=key[positions[0][0]-1][positions[0][1]]
+            else:
+                clearText+=key[4][positions[0][1]]
+            if positions[1][0]>0:                
+                clearText+=key[positions[1][0]-1][positions[1][1]]
+            else:
+                clearText+=key[4][positions[1][0]]
+        else:
+            clearText+=key[positions[0][0]][positions[1][1]]
+            clearText+=key[positions[1][0]][positions[0][1]]
+    return clearText
+
+testKey = [['a','b','c','d','e'],['f','g','h','i','k'],['l','m','n','o','p'],['q','r','s','t','u'],['v','w','x','y','z']]
+
+playfairDecrypt(stage6,testKey)
+playfairSearch(stage6[0:2].lower(), testKey)
+type(stage6[0:2])
