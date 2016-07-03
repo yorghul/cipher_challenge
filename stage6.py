@@ -50,8 +50,8 @@ def criteria_english(decodedText):
     proba = {}
     logprob = 0
     for quadgram in quadrigrams.iteritems():
-        proba[quadgram[0]] = round(float(quadgram[1])/N,2)
-        logprob += log10(round(float(quadgram[1])/N,2))
+        if quadgram[1] > 0:
+            proba[quadgram[0]] = float(quadgram[1])/N
+            print(float(quadgram[1])/N)
+            logprob += log10(float(quadgram[1])/N)
     return(logprob, proba)
-
-criteria_english(stage6)
