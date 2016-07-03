@@ -674,12 +674,11 @@ def quadrigramDash(text):
 def quadrigram(text):
     dictFreqGroup = {}
     length = len(text)
-    for j in range(0, length, 2):
+    for j in range(0, length-3, 2):
         init = text[j:j+4]
         count = 0
         i=0
-        print(init)
-        while (i < length - 3):
+        while (i < length - 4):
             if ((text[i:i+4]) == init):         
                 count += 1
                 i+=2               
@@ -733,9 +732,6 @@ def playfairSearch(di, key):
             j+=1
             k=0
         return positions
-        
-playfairSearch('', testKey)
-testKey[0][0]
 
 def playfairDecrypt(text, key):
     l = len(text)
@@ -764,6 +760,9 @@ def playfairDecrypt(text, key):
             clearText+=key[positions[0][0]][positions[1][1]]
             clearText+=key[positions[1][0]][positions[0][1]]
     return clearText
+
+quadris = quadrigram(stage6S)
+decodageDi(stage6S,hypothese)
 
 testKey = [['a','b','c','d','e'],['f','g','h','i','k'],['l','m','n','o','p'],['q','r','s','t','u'],['v','w','x','y','z']]
 
