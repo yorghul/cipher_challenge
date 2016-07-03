@@ -713,6 +713,7 @@ hypothese['BL']='re'
 hypothese['SR']='ta'
 hypothese['OC']='he'
 hypothese['CO']='eh'
+hypothese['OY']='is'
 
 
 
