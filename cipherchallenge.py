@@ -671,7 +671,7 @@ def quadrigram(text):
             dictFreqGroup[init]=count
     return dictFreqGroup
     
-quadris = quadrigram(stage6S)
+
 
 def topN(dictionnary, N):
     L = sorted(dictionnary, key=dictionnary.get, reverse=True)
@@ -696,5 +696,5 @@ hypothese['OF']='ht'
 hypothese['BL']='ta'
 hypothese['SR']='re'
 
-
+quadris = quadrigram(stage6S)
 decodageDi(stage6S,hypothese)
