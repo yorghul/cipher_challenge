@@ -21,9 +21,9 @@ def read_file(path):
                 dicti[row[0]] = float(row[1])
     return dicti
     
-digramsenglish = read_file('C:/Users/Damien/Documents/GitHub/cipher_challenge/english-digrams.csv')  
-trigramsenglish = read_file(str('C:/Users/Damien/Documents/GitHub/cipher_challenge/english-trigrams.csv'))
-freqEnglish = read_file('C:/Users/Damien/Documents/GitHub/cipher_challenge/english-letter-frequency.csv')  
+digramsenglish = read_file('C:/Users/Julie/Documents/GitHub/cipher_challenge/english-digrams.csv')  
+trigramsenglish = read_file(str('C:/Users/Julie/Documents/GitHub/cipher_challenge/english-trigrams.csv'))
+freqEnglish = read_file('C:/Users/Julie/Documents/GitHub/cipher_challenge/english-letter-frequency.csv')  
 
 
 def topN(dictionnary, N):
